@@ -3,11 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Bot Inteligentny Inaczej</title>
-    <style>.user-style { color: black; font-weight: bold; }</style>
+    <style>
+        #chat-window {
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+        .user-style { color: black; font-weight: bold; margin: 5px 0;}
+        .bot-style { color: black; margin: 5px 0; }
+        .error-style { color: red; margin: 5px 0; }
+    </style>
 </head>
 <body>
-    <div id="chat-window">Cześć, jak tam zajęcia z JavaScript z Panem Frączem? Spoko Ziomek?</div>
-    <input type="text" id="message-input">
+<h2> Bot inteligenty inaczej </h2>
+<p>Cześć, jestem wyjątkowym botem i z chęcią dowiem się czy nadajemy na tych samych falach. Zaczynamy? </p>
+
+    <div id="chat-window">
+        <div class="bot-style">Jak tam zajęcia z JavaScript z Panem Frączem? Spoko Ziomek?</div>
+    </div>
+    <input type="text" id="message-input" placeholder="Wpisz wiadomość">
     <button id="send-button">Wyślij</button>
 
 <script>
@@ -15,21 +31,44 @@
     const messageInput = document.getElementById('message-input');
     const sendButton = document.getElementById('send-button');
 
-    sendButton.addEventListener('click', function() {
-        const userText = messageInput.value;
-
-        let newMessage = document.createElement('div');
-        newMessage.innerText = userText;
-        newMessage.classList.add('user-style');
-
+    function addMessage(text, className) {
+        const newMessage = document.createElement('div');
+        newMessage.innerText = text;
+        newMessage.classList.add(className);
         chatWindow.appendChild(newMessage);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+    sendButton.addEventListener('click', function() {
+        const userText = messageInput.value.trim();
+        if (userText === "") return;
+
+        const forbiddenWord = "motyla noga";
+        if (userText.toLowerCase().includes(forbiddenWord)) {
+            alert("Nieładnie tak mówić!");
+            addMessage("Proszę, nie używaj takich słów", "error-style");
+            messageInput.value = '';
+            return;
+        }
+
+        addMessage(userText, 'user-style');
         messageInput.value = '';
 
         setTimeout(function() {
-            let botMessage = document.createElement('div');
-            botMessage.innerText = "Bot: To ciekawe! Opowiedz mi o tym więcej";
-            chatWindow.appendChild(botMessage);
-        }, 1000);
+            let botMessage = "";
+            const lowerText = userText.toLowerCase();
+
+            if (lowerText.includes("tak")) {
+                botMessage = "To świetnie, cieszę się Twoim szczęściem!";
+            } else if (lowerText.includes("nie")) {
+                botMessage = "Przykro mi to słyszeć, może jutro będzie lepiej";
+            } else if (lowerText.includes("cześć") || lowerText.includes("hej")) {
+                botMessage = "Hej! Miło Cię widzieć. Masz dla mnie jakiś ciekawy temat?";
+            } else {
+                botMessage = "To ciekawe! Opowiedz mi o tym więcej";
+            }
+
+            addMessage(botMessage, 'bot-style');
+        }, 2000);
     });
 
     messageInput.addEventListener('keypress', function(e) {
