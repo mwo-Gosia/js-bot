@@ -4,16 +4,88 @@
     <meta charset="UTF-8">
     <title>Bot Inteligentny Inaczej</title>
     <style>
+        *{
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            color: #2980b9;
+            margin-bottom: 2px;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p {margin-bottom: 30px; font-size: 17px;}
+
         #chat-window {
-            height: 300px;
+            width: 500px;
+            height: 350px;
             border: 1px solid #ccc;
+            border-radius: 8px 8px 0 0;
+            background-color: white;
             overflow-y: auto;
             margin-bottom: 10px;
             padding: 10px;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .user-style { color: black; font-weight: bold; margin: 5px 0;}
-        .bot-style { color: black; margin: 5px 0; }
-        .error-style { color: red; margin: 5px 0; }
+        .user-style {
+            color: black;
+            padding-left: 10px;
+            margin: 5px 0;
+            border-left: 3px solid #2980b9;
+            font-style: italic;
+        }
+        .bot-style {
+            color: black;
+            margin: 5px 0;
+            font-style: italic;
+        }
+        .error-style {
+            color: red;
+            margin: 5px 0;
+            font-style: italic;
+        }
+
+        .controls {
+            display: flex;
+            width: 500px;
+            gap: 0px;
+        }
+
+        #message-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-right: none;
+            border-radius: 0 0 0 8px;
+            outline: none;
+        }
+        #send-button {
+            padding: 10px 20px;
+            background-color: #2980b9;
+            color: white;
+            border: 1px solid #2980b9;
+            border-radius: 0 0 8px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #send-button:hover {
+            background-color: #3498db;
+        }
+
     </style>
 </head>
 <body>
@@ -23,8 +95,12 @@
     <div id="chat-window">
         <div class="bot-style">Jak tam zajęcia z JavaScript z Panem Frączem? Spoko Ziomek?</div>
     </div>
-    <input type="text" id="message-input" placeholder="Wpisz wiadomość">
-    <button id="send-button">Wyślij</button>
+
+    <div class="controls">
+        <input type="text" id="message-input" placeholder="Wpisz wiadomość">
+        <button id="send-button">Wyślij</button>
+    </div>
+
 
 <script>
     const chatWindow = document.getElementById('chat-window');
@@ -68,7 +144,7 @@
             }
 
             addMessage(botMessage, 'bot-style');
-        }, 2000);
+        }, 1500);
     });
 
     messageInput.addEventListener('keypress', function(e) {
