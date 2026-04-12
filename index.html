@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Bot Inteligentny Inaczej</title>
+    <style>.user-style { color: black; font-weight: bold; }</style>
 </head>
 <body>
     <div id="chat-window">Cześć, jak tam zajęcia z JavaScript z Panem Frączem? Spoko Ziomek?</div>
@@ -10,13 +11,33 @@
     <button id="send-button">Wyślij</button>
 
 <script>
-    const chatWindow = document.getElementById("chat-window");
-    const messageInput = document.getElementById("message-input");
-    const sendButton = document.getElementById("send-button");
+    const chatWindow = document.getElementById('chat-window');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
 
-    sendButton.addEventListener("click", function() {
-        console.log("Działa");
+    sendButton.addEventListener('click', function() {
+        const userText = messageInput.value;
+
+        let newMessage = document.createElement('div');
+        newMessage.innerText = userText;
+        newMessage.classList.add('user-style');
+
+        chatWindow.appendChild(newMessage);
+        messageInput.value = '';
+
+        setTimeout(function() {
+            let botMessage = document.createElement('div');
+            botMessage.innerText = "Bot: To ciekawe! Opowiedz mi o tym więcej";
+            chatWindow.appendChild(botMessage);
+        }, 1000);
     });
+
+    messageInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        sendButton.click();
+    }
+});
+
 </script>
 
 </body>
